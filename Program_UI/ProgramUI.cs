@@ -10,6 +10,7 @@ namespace Program_UI
     class ProgramUI
     {
         private DeveloperRepo _developerRepository = new DeveloperRepo();
+        private DevTeamRepo _devTeamRepository = new DevTeamRepo();
 
         // This is the method that runs the application
         public void Run()
@@ -43,19 +44,24 @@ namespace Program_UI
                         // Add New Developer
                         AddNewDeveloper();
                         break;
+
                     case "2":
                         // Add New Team
                         break;
+
                     case "3":
                         // Assign a Developer to a team
                         break;
+
                     case "4":
                         // View list of developers
                         DisplayAllDevelopers();
                         break;
+
                     case "5":
                         // View list of Teams
                         break;
+
                     case "6":
                         // Exit
                         break;
@@ -83,11 +89,56 @@ namespace Program_UI
             newDeveloper.HasPluralsightAccess = response;
 
             // ID number
-            Console.WriteLine("An ID will automatically be assign to the new developer.");
+            Console.WriteLine("This developer will automatically be assigned an ID.");
             newDeveloper.IDNumber = GenerateIDNumber();
 
             _developerRepository.AddDevToList(newDeveloper);
         }
+
+        // Add new team
+
+        private void AddNewDevTeam()
+        {
+            Console.Clear();
+            DevTeam newDevTeam = new DevTeam();
+
+            // Title
+            Console.WriteLine("What is the Title of this team?");
+            newDevTeam.Title = Console.ReadLine();
+
+            // Team ID and Project ID
+            Console.WriteLine("This team will automatically be assign an ID.");
+            Console.WriteLine("The project this team is working on will also automatically be assigned an ID.");
+            newDevTeam.TeamID = GenerateIDNumber();
+            newDevTeam.ProjectID = GenerateIDNumber();
+
+            // Department
+            Console.WriteLine("What department is this team working under?");
+            newDevTeam.Department = Console.ReadLine();
+
+            // Project Status
+            Console.WriteLine("Enter the status of this teams project\n" +
+                "1. PrePhase\n" +
+                "2. Pending\n" +
+                "3. Complete\n");
+
+            string statusAsString = Console.ReadLine();
+            int statusAsInt = int.Parse(statusAsString);
+            newDevTeam.StatusOfProject = (ProjectStatus)statusAsInt;
+
+            _devTeamRepository.AddDevTeam(newDevTeam);
+
+        }
+
+        // Add a developer to a team
+        private void AddDevToTeam()
+        {
+            Console.Clear();
+
+        }
+         
+            
+
 
         // View current list of developers
         private void DisplayAllDevelopers()
@@ -101,6 +152,25 @@ namespace Program_UI
                 Console.WriteLine($"Name: {dev.Name}\n" +
                     $"ID Number: {dev.IDNumber}\n" +
                     $"Pluralsight Access: {dev.HasPluralsightAccess}");
+            }
+        }
+
+        // View current List of Teams
+        private void DisplayAllTeams()
+        {
+            Console.Clear();
+
+            List<DevTeam> listOfDevTeams = _devTeamRepository.GetListOfTeams();
+
+            foreach(DevTeam developerTeam in listOfDevTeams)
+            {
+                Console.WriteLine($"Title: {developerTeam.Title}\n" +
+                    $"Team ID: {developerTeam.TeamID}\n" +
+                    $"Department: {developerTeam.Department}\n" +
+                    $"Project Title: {developerTeam.ProjectTitle}\n" +
+                    $"Project ID: {developerTeam.ProjectID}\n" +
+                    $"Project Status: {developerTeam.StatusOfProject}\n" +
+                    $"Team Members: {developerTeam.Members}");
             }
         }
 
