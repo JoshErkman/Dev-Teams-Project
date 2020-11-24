@@ -27,7 +27,7 @@ namespace DevTeamsProject
 
         public DevTeam() { }
 
-        public DevTeam(string title, string teamID, string department, string projectID, ProjectStatus statusOfProject, List<Developer> members,)
+        public DevTeam(string title, string teamID, string department, string projectID, ProjectStatus statusOfProject, List<Developer> members)
         {
             Title = title;
             TeamID = teamID;

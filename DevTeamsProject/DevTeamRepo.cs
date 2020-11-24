@@ -12,9 +12,30 @@ namespace DevTeamsProject
         private readonly List<DevTeam> _devTeams = new List<DevTeam>();
 
         //DevTeam Create
+        public void AddDevTeam(DevTeam team)
+        {
+            _devTeams.Add(team);
+        }
+
+
+
         //DevTeam Read
+        public List<DevTeam> GetListOfTeams()
+        {
+            return _devTeams;
+        }
+
+
         //DevTeam Update
+
+
+
+
         //DevTeam Delete
+
+
+
+
 
         //DevTeam Helper (Get Team by ID)
 
