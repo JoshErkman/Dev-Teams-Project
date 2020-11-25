@@ -59,6 +59,7 @@ namespace Program_UI
 
                     case "3":
                         //Update Developer Info
+                        UpdateExistingDev();
                         break;
 
                     case "4":
@@ -108,7 +109,7 @@ namespace Program_UI
             }
         }
 
-        // Add new developer
+        // 1 Add new developer
         private void AddNewDeveloper()
         {
             Console.Clear();
@@ -130,7 +131,7 @@ namespace Program_UI
             _developerRepository.AddDevToList(newDeveloper);
         }
 
-        // Add new team
+        // 2 Add new team
 
         private void AddNewDevTeam()
         {
@@ -169,6 +170,28 @@ namespace Program_UI
 
         }
 
+        // 3 update developer info
+        private void UpdateExistingDev()
+        {
+            // Ask for the Name of the developer the user would like to update
+            Console.WriteLine("Enter the name of the developer you would like to update.");
+
+            // Get the name of the developer
+            string originalDev = Console.ReadLine();
+
+            // build new object for developer
+            Developer newDev = new Developer();
+
+            Console.WriteLine("Enter the name for the develoer.");
+            newDev.Name = Console.ReadLine();
+
+            Console.WriteLine("An ID will automatically be generated");
+            newDev.IDNumber = GenerateIDNumber();
+
+            HasPluralsightAccess();
+
+        }
+
         // Add new developers to teams
         private void AddMembersToTeam()
         {
@@ -202,7 +225,7 @@ namespace Program_UI
             }
             else
             {
-                Console.WriteLine("Ther is no developer with that ID");
+                Console.WriteLine("There is no developer with that ID");
             }
         }
 
