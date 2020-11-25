@@ -11,6 +11,7 @@ namespace Program_UI
     {
         private DeveloperRepo _developerRepository = new DeveloperRepo();
         private DevTeamRepo _devTeamRepository = new DevTeamRepo();
+        private Random _randomID = new Random();
 
         // This is the method that runs the application
         public void Run()
@@ -29,10 +30,16 @@ namespace Program_UI
                 Console.WriteLine("Select a menu option:\n" +
                     "1. Add New Developer\n" +
                     "2. Add New Team\n" +
-                    "3. Assign A Developer To A Team\n" +
-                    "4. View Developers\n" +
-                    "5. View Teams\n" +
-                    "6. Exit");
+                    "3. Update Developer Info\n" +
+                    "4 Update Team Info\n" +
+                    "5 Remove Developer\n" +
+                    "6. Remove Team\n" +
+                    "7. Assign A Developer To A Team\n" +
+                    "8. View Individual Developer\n" +
+                    "9. View All Developers\n" +
+                    "10 View Individual Team\n" +
+                    "11. View All Teams\n" +
+                    "12. Exit");
 
                 // Get user input
                 string input = Console.ReadLine();
@@ -47,22 +54,50 @@ namespace Program_UI
 
                     case "2":
                         // Add New Team
+                        AddNewDevTeam();
                         break;
 
                     case "3":
-                        // Assign a Developer to a team
+                        //Update Developer Info
                         break;
 
                     case "4":
-                        // View list of developers
-                        DisplayAllDevelopers();
+                        // Update Team Info
                         break;
 
                     case "5":
-                        // View list of Teams
+                        // Remove developer
                         break;
 
                     case "6":
+                        // Remove Team
+                        break;
+
+                    case "7":
+                        // Assign A developer to a team
+                        AddMembersToTeam();
+                        break;
+
+                    case "8":
+                        // view individual developer
+                        ViewIndividualDeveloper();
+                        break;
+
+                    case "9":
+                        // View All developers
+                        DisplayAllDevelopers();
+                        break;
+
+                    case "10":
+                        // View Individual Team
+                        break;
+
+                    case "11":
+                        // view all teams
+                        DisplayAllTeams();
+                        break;
+
+                    case "12":
                         // Exit
                         break;
                 }
@@ -112,6 +147,10 @@ namespace Program_UI
             newDevTeam.TeamID = GenerateIDNumber();
             newDevTeam.ProjectID = GenerateIDNumber();
 
+            // Project Name
+            Console.WriteLine("What is the title of this teams current project.");
+            newDevTeam.ProjectTitle = Console.ReadLine();
+
             // Department
             Console.WriteLine("What department is this team working under?");
             newDevTeam.Department = Console.ReadLine();
@@ -130,14 +169,44 @@ namespace Program_UI
 
         }
 
-        // Add a developer to a team
-        private void AddDevToTeam()
+        // Add new developers to teams
+        private void AddMembersToTeam()
         {
             Console.Clear();
+            List<string> MembersList = new List<string>();
 
+            Console.WriteLine("Pick a team you would like to add this member to.");
+            DisplayAllTeams();
+            Console.ReadKey();
         }
-         
-            
+
+        // View individual developer
+        private void ViewIndividualDeveloper()
+        {
+            Console.Clear();
+            // Prompts the user to give an ID
+            Console.WriteLine("Enter the ID of the developer you are looking for:");
+
+            // Get the users Input
+            string ID = Console.ReadLine();
+
+            // find the user by that ID
+            Developer dev = _developerRepository.GetDeveloperByID(ID);
+
+            // Display said content if it is not null
+            if(dev != null)
+            {
+                Console.WriteLine($"Name: {dev.Name}\n" +
+                    $"ID: {dev.IDNumber}\n" +
+                    $"Pluralsight access: {dev.HasPluralsightAccess}");
+            }
+            else
+            {
+                Console.WriteLine("Ther is no developer with that ID");
+            }
+        }
+
+
 
 
         // View current list of developers
@@ -154,6 +223,8 @@ namespace Program_UI
                     $"Pluralsight Access: {dev.HasPluralsightAccess}");
             }
         }
+
+
 
         // View current List of Teams
         private void DisplayAllTeams()
@@ -176,7 +247,11 @@ namespace Program_UI
 
         private string GenerateIDNumber()
         {
-            return Guid.NewGuid().ToString("N");
+            //List<Developer> listOfDevelopers = _developerRepository.GetListOfDevs()
+
+            int ID = _randomID.Next(000, 999);
+            ID = _randomID.Next(000, 999);
+            return ID.ToString();
         }
 
         // Seed method

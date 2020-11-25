@@ -10,12 +10,19 @@ namespace DevTeamsProject
     {
         private readonly DeveloperRepo _developerRepo = new DeveloperRepo(); // this gives you access to the _developerDirectory so you can access existing Developers and add them to a team
         private readonly List<DevTeam> _devTeams = new List<DevTeam>();
+        
 
         //DevTeam Create
         public void AddDevTeam(DevTeam team)
         {
             _devTeams.Add(team);
         }
+
+        /*List<string> MembersList = new List<string>();
+        public void AddMembers(Developer dev)
+        {
+            MembersList.Add;
+        }*/
 
 
 

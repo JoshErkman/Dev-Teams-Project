@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevTeamsProject
 {
+    // POCO for Developer
     public class Developer
     {
         public string Name { get; set; }
