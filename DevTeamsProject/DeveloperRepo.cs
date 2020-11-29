@@ -16,19 +16,6 @@ namespace DevTeamsProject
             _developerDirectory.Add(developer);
         }
 
-        // Generte random ID number
-
-       /* public Random a = new Random();
-        public List<int> randomList = new List<int>();
-        int MyNumber = 0;
-        private void NewNumber()
-        {
-            MyNumber = a.Next(0, 10);
-            while (randomList.Contains(MyNumber))
-                MyNumber = a.Next(0, 10);
-        }*/
-
-
 
         //Developer Read
         public List<Developer> GetListOfDevs()
@@ -41,14 +28,14 @@ namespace DevTeamsProject
         public bool UpdateExistingDev(string originalDeveloper, Developer newDev)
         {
             // Find the original developer the user would like to update
-            Developer originalDev = GetDeveloperByID(originalDeveloper);
+            Developer oldDeveloper = GetDeveloperByID(originalDeveloper);
 
             // Update the developer in the list
-            if(originalDev != null)
+            if(oldDeveloper != null)
             {
-                originalDev.Name = newDev.Name;
-                originalDev.IDNumber = newDev.IDNumber;
-                originalDev.HasPluralsightAccess = newDev.HasPluralsightAccess;
+                oldDeveloper.Name = newDev.Name;
+                oldDeveloper.IDNumber = newDev.IDNumber;
+                oldDeveloper.HasPluralsightAccess = newDev.HasPluralsightAccess;
                 return true;
             }
             else
