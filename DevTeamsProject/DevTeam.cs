@@ -27,7 +27,7 @@ namespace DevTeamsProject
 
         public ProjectStatus StatusOfProject { get; set; }
 
-        public List<Developer> Members { get; set; }
+        public List<Developer> Members { get; set; } = new List<Developer>();
 
         public DevTeam() { }
 

@@ -18,15 +18,9 @@ namespace DevTeamsProject
             _devTeams.Add(team);
         }
 
-        /*List<string> MembersList = new List<string>();
-        public void AddMembers(Developer dev)
-        {
-            MembersList.Add;
-        }*/
-
-
 
         //DevTeam Read
+
         public List<DevTeam> GetListOfTeams()
         {
             return _devTeams;

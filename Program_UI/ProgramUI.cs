@@ -65,6 +65,7 @@ namespace Program_UI
 
                     case "4":
                         // Update Team Info
+                        UpdateExistingDevTeam();
                         break;
 
                     case "5":
@@ -252,13 +253,18 @@ namespace Program_UI
             newDevTeam.StatusOfProject = (ProjectStatus)statusAsInt;
 
             // verify the update worked
-            bool wasUpdated = _devTeamRepository.
+            bool wasUpdated = _devTeamRepository.UpdateExistingDevTeam(oldTeam, newDevTeam);
+
+            if (wasUpdated)
+            {
+                Console.WriteLine("The new team was updated successfully");
+            }
+            else
+            {
+                Console.WriteLine("The new team could not be updated");
+            }
 
         }
-
-
-
-
 
         // 5 Delete Developer
         private void DeleteExistingDeveloper()
@@ -307,15 +313,27 @@ namespace Program_UI
         }
 
 
-        // Add new developers to teams
+        // 7 Add new developers to teams
         private void AddMembersToTeam()
         {
             Console.Clear();
-            List<string> MembersList = new List<string>();
+           // List<string> MembersList = new List<string>();
 
-            Console.WriteLine("Pick a team you would like to add this member to.");
             DisplayAllTeams();
-            Console.ReadKey();
+            Console.WriteLine("\nPick a team by its ID that you would like to add this member to.");
+            string teamIDSelected = Console.ReadLine();
+
+            Console.Clear();
+            DisplayAllDevelopers();
+            Console.WriteLine("\nPick a developer by ID you would like to add to the team:");
+            
+            string chosenDeveloperID = Console.ReadLine();
+
+            Developer dev = _developerRepository.GetDeveloperByID(chosenDeveloperID);
+
+
+            bool wasUpdated = _devTeamRepository.AddDevToTeam(teamIDSelected, dev);
+
         }
 
         // View individual developer
@@ -356,7 +374,7 @@ namespace Program_UI
 
             foreach (Developer dev in listOfDevelopers)
             {
-                Console.WriteLine($"Name: {dev.Name}\n" +
+                Console.WriteLine($"\nName: {dev.Name}\n" +
                     $"ID Number: {dev.IDNumber}\n" +
                     $"Pluralsight Access: {dev.HasPluralsightAccess}");
             }
@@ -373,12 +391,14 @@ namespace Program_UI
 
             foreach (DevTeam developerTeam in listOfDevTeams)
             {
-                Console.WriteLine($"Title: {developerTeam.Title}\n" +
+                Console.WriteLine($"\nTitle: {developerTeam.Title}\n" +
                     $"Team ID: {developerTeam.TeamID}\n" +
                     $"Department: {developerTeam.Department}\n" +
                     $"Project Title: {developerTeam.ProjectTitle}\n" +
                     $"Project ID: {developerTeam.ProjectID}\n" +
                     $"Project Status: {developerTeam.StatusOfProject}");
+
+                Console.WriteLine("Members:");
 
                     foreach (Developer developerMember in developerTeam.Members)
                 {
@@ -398,7 +418,7 @@ namespace Program_UI
         }
 
         // Seed developer list
-        private void SeedDeveloperList()
+        public void SeedDeveloperList()
         {
             Developer devOne = new Developer("Josh Erkman", GenerateIDNumber(), true);
             Developer devTwo = new Developer("Joel Norman", GenerateIDNumber(), false);
