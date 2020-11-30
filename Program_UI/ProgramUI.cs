@@ -85,7 +85,7 @@ namespace Program_UI
 
                     case "8":
                         //Remove A developer from a team
-
+                        RemoveMembersFromTeam();
                         break;
 
                     case "9":
@@ -100,7 +100,13 @@ namespace Program_UI
 
                     case "11":
                         // exit
+                        Console.WriteLine("Goodbye!");
+                        keepRunning = false;
                         break;
+                    default:
+                        Console.WriteLine("Please enter a valid number.");
+                        break;
+                        
                 }
 
                 Console.WriteLine("Please press any key to continue...");
@@ -316,8 +322,8 @@ namespace Program_UI
         // 7 Add new developers to teams
         private void AddMembersToTeam()
         {
+            // clear console
             Console.Clear();
-           // List<string> MembersList = new List<string>();
 
             DisplayAllTeams();
             Console.WriteLine("\nPick a team by its ID that you would like to add this member to.");
@@ -333,6 +339,54 @@ namespace Program_UI
 
 
             bool wasUpdated = _devTeamRepository.AddDevToTeam(teamIDSelected, dev);
+
+            //If the developer was added we need to tell the user
+            // If it wasnt we also need to tell them
+            if (wasUpdated)
+            {
+                Console.WriteLine("The developer was successfully added to the team");
+            }
+            else
+            {
+                Console.WriteLine("The developer was unable to be added to the team");
+            }
+
+        }
+
+        // Remove individual developer from a team
+        private void RemoveMembersFromTeam()
+        {
+            // clear console
+            Console.Clear();
+
+            // pick the team from which they would like to remove a developer
+            DisplayAllTeams();
+            Console.WriteLine("\nPick a team by ID that you would like to remove a member from.");
+            string teamIDSelected = Console.ReadLine();
+
+            //clear console
+            Console.Clear();
+
+            // pick the developer that the user would like to remove from the selected team
+            DisplayAllDevelopers();
+            Console.WriteLine("\nPick a developer by ID that you would like to remove from the team");
+            string developerIDSelected = Console.ReadLine();
+
+            // Get developer by ID
+            Developer dev = _developerRepository.GetDeveloperByID(developerIDSelected);
+
+            // remove developer from team
+            bool wasUpdated = _devTeamRepository.RemoveDevFromTeam(teamIDSelected, dev);
+            if (wasUpdated)
+            {
+                Console.WriteLine("Developer was removed successfully");
+            }
+            else
+            {
+                Console.WriteLine("Developer was unable to be removed");
+            }
+
+
 
         }
 
@@ -408,6 +462,7 @@ namespace Program_UI
             }
         }
 
+        // Generate ID number
         private string GenerateIDNumber()
         {
             //List<Developer> listOfDevelopers = _developerRepository.GetListOfDevs()
@@ -417,7 +472,7 @@ namespace Program_UI
             return ID.ToString();
         }
 
-        // Seed developer list
+        // Seed developer and team list
         public void SeedDeveloperList()
         {
             Developer devOne = new Developer("Josh Erkman", GenerateIDNumber(), true);
@@ -455,13 +510,6 @@ namespace Program_UI
 
         }
 
-        // Seed team list
-        private void SeedTeamList()
-        {
-
-
-
-        }
 
         private bool HasPluralsightAccess()
         {

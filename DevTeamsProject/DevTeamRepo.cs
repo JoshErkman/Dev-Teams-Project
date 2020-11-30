@@ -95,6 +95,7 @@ namespace DevTeamsProject
             return null;
         }
 
+        // Add developer to a team
         public bool AddDevToTeam(string teamID, Developer developer)
         {
             DevTeam devTeam = GetDevTeamByID(teamID);
@@ -117,6 +118,29 @@ namespace DevTeamsProject
             }
             
 
+        }
+
+        // remove a developer from a team
+        public bool RemoveDevFromTeam(string teamID, Developer developer)
+        {
+            DevTeam devTeam = GetDevTeamByID(teamID);
+            if (devTeam == null)
+            {
+                return false;
+            }
+
+            int initialCount = devTeam.Members.Count;
+            devTeam.Members.Remove(developer);
+            int newCount = devTeam.Members.Count;
+
+            if (newCount < initialCount)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
