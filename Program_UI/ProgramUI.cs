@@ -9,36 +9,45 @@ namespace Program_UI
 {
     class ProgramUI
     {
+        // Field holding the developer Repo
         private DeveloperRepo _developerRepository = new DeveloperRepo();
+
+        // Field holding the Developer Team Repo
         private DevTeamRepo _devTeamRepository = new DevTeamRepo();
+
+        // This field allows new ID's to be created that do not match others
         private Random _randomID = new Random();
 
         // This is the method that runs the application
         public void Run()
         {
+            // Seed List with developers and Teams
             SeedDeveloperList();
+
+            // Runs Menu
             Menu();
         }
 
         //Menu
         private void Menu()
         {
+            // Bool and loop for when the user wants to exit
             bool keepRunning = true;
             while (keepRunning)
             {
                 // Dislay our options to the user
                 Console.WriteLine("Select a menu option:\n" +
-                    "1. Add New Developer\n" +
+                    "\n1. Add New Developer\n" +
                     "2. Add New Team\n" +
-                    "3. Update Developer Info\n" +
+                    "\n3. Update Developer Info\n" +
                     "4 Update Team Info\n" +
-                    "5 Remove Developer\n" +
+                    "\n5 Remove Developer\n" +
                     "6. Remove Team\n" +
-                    "7. Assign A Developer To A Team\n" +
+                    "\n7. Assign A Developer/Multiple To A Team\n" +
                     "8. Remove A Developer From A Team\n" +
-                    "9. View All Developers\n" +
+                    "\n9. View All Developers\n" +
                     "10. View All Teams\n" +
-                    "11. Exit");
+                    "\n11. Exit");
 
 
 
@@ -118,7 +127,10 @@ namespace Program_UI
         // 1 Add new developer
         private void AddNewDeveloper()
         {
+            // clear console
             Console.Clear();
+
+            // Create new developer
             Developer newDeveloper = new Developer();
 
             // Name
@@ -126,14 +138,14 @@ namespace Program_UI
             newDeveloper.Name = Console.ReadLine();
 
             // Does this developer have pluralsight access
-
             bool response = HasPluralsightAccess();
             newDeveloper.HasPluralsightAccess = response;
 
             // ID number
-            Console.WriteLine("This developer will automatically be assigned an ID.");
+            Console.WriteLine("\nThis developer will automatically be assigned an ID.");
             newDeveloper.IDNumber = GenerateIDNumber();
 
+            // Add developer to the developer repo
             _developerRepository.AddDevToList(newDeveloper);
         }
 
@@ -141,7 +153,10 @@ namespace Program_UI
 
         private void AddNewDevTeam()
         {
+            // Clear Console
             Console.Clear();
+
+            // Create new Dev Team
             DevTeam newDevTeam = new DevTeam();
 
             // Title
@@ -149,21 +164,21 @@ namespace Program_UI
             newDevTeam.Title = Console.ReadLine();
 
             // Team ID and Project ID
-            Console.WriteLine("This team will automatically be assign an ID.");
+            Console.WriteLine("\nThis team will automatically be assign an ID.");
             Console.WriteLine("The project this team is working on will also automatically be assigned an ID.");
             newDevTeam.TeamID = GenerateIDNumber();
             newDevTeam.ProjectID = GenerateIDNumber();
 
             // Project Name
-            Console.WriteLine("What is the title of this teams current project.");
+            Console.WriteLine("\nWhat is the title of this teams current project.");
             newDevTeam.ProjectTitle = Console.ReadLine();
 
             // Department
-            Console.WriteLine("What department is this team working under?");
+            Console.WriteLine("\nWhat department is this team working under?");
             newDevTeam.Department = Console.ReadLine();
 
             // Project Status
-            Console.WriteLine("Enter the status of this teams project\n" +
+            Console.WriteLine("\nEnter the status of this teams project\n" +
                 "1. PrePhase\n" +
                 "2. Pending\n" +
                 "3. Complete\n");
@@ -191,12 +206,15 @@ namespace Program_UI
             // build new object for developer
             Developer newDev = new Developer();
 
-            Console.WriteLine("Enter the name for the new develoer.");
+            // get the name for the new develoer
+            Console.WriteLine("\nEnter the name for the new develoer.");
             newDev.Name = Console.ReadLine();
 
+            // check if the new developer has pluralsight access
             HasPluralsightAccess();
 
-            Console.WriteLine("An ID will automatically be generated");
+            // Let the user know that a new ID will automatically be generated and generate ID
+            Console.WriteLine("\nAn ID will automatically be generated");
             newDev.IDNumber = GenerateIDNumber();
 
             // verify the update worked
@@ -204,11 +222,11 @@ namespace Program_UI
 
             if (wasUpdated)
             {
-                Console.WriteLine("Developer was successfully updated.");
+                Console.WriteLine("\nDeveloper was successfully updated.");
             }
             else
             {
-                Console.WriteLine("Developer could not be updated.");
+                Console.WriteLine("\nDeveloper could not be updated.");
             }
         }
 
@@ -220,7 +238,7 @@ namespace Program_UI
             DisplayAllTeams();
 
             // Ask for the ID of the team you would like to update
-            Console.WriteLine("Enter the ID for the team you would like to update");
+            Console.WriteLine("\nEnter the ID for the team you would like to update");
 
             // Get the ID of the team
             string oldTeam = Console.ReadLine();
@@ -229,27 +247,27 @@ namespace Program_UI
             DevTeam newDevTeam = new DevTeam();
 
             // Get new name for the dev team update
-            Console.WriteLine("Enter the name for the new dev team");
+            Console.WriteLine("\nEnter the name for the new dev team");
             newDevTeam.Title = Console.ReadLine();
 
             // Generate new ID for new team
-            Console.WriteLine("A new ID will automatically be generated for this team");
+            Console.WriteLine("\nA new ID will automatically be generated for this team");
             newDevTeam.TeamID = GenerateIDNumber();
 
             // Get new department for new team
-            Console.WriteLine("Enter the department for the new team");
+            Console.WriteLine("\nEnter the department for the new team");
             newDevTeam.Department = Console.ReadLine();
 
             // Get new project title for new team
-            Console.WriteLine("Enter the project title for the new team");
+            Console.WriteLine("\nEnter the project title for the new team");
             newDevTeam.ProjectTitle = Console.ReadLine();
 
             // Get new ID for new team project
-            Console.WriteLine("A new ID will be automatically assigned to this project");
+            Console.WriteLine("\nA new ID will be automatically assigned to this project");
             newDevTeam.ProjectID = GenerateIDNumber();
 
             // Get the project status for the new teams project
-            Console.WriteLine("Enter the status of the new teams project:\n" +
+            Console.WriteLine("\nEnter the status of the new teams project:\n" +
                 "1. PrePhase\n" +
                 "2. Pending\n" +
                 "3. Complete\n");
@@ -263,11 +281,11 @@ namespace Program_UI
 
             if (wasUpdated)
             {
-                Console.WriteLine("The new team was updated successfully");
+                Console.WriteLine("\nThe new team was updated successfully");
             }
             else
             {
-                Console.WriteLine("The new team could not be updated");
+                Console.WriteLine("\nThe new team could not be updated");
             }
 
         }
@@ -281,6 +299,7 @@ namespace Program_UI
             Console.WriteLine("\nEnter the ID number of the developer you would like to remove:");
             string input = Console.ReadLine();
 
+            // Check to see if dev was removed from devrepo
             bool wasDeleted = _developerRepository.RemoveDevFromList(input);
 
             if (wasDeleted)
@@ -322,36 +341,75 @@ namespace Program_UI
         // 7 Add new developers to teams
         private void AddMembersToTeam()
         {
+           
             // clear console
             Console.Clear();
 
+            // Get ID for the team the user would like to add a developer to
             DisplayAllTeams();
             Console.WriteLine("\nPick a team by its ID that you would like to add this member to.");
             string teamIDSelected = Console.ReadLine();
 
+            // Get ID for developer
             Console.Clear();
             DisplayAllDevelopers();
-            Console.WriteLine("\nPick a developer by ID you would like to add to the team:");
-            
-            string chosenDeveloperID = Console.ReadLine();
 
-            Developer dev = _developerRepository.GetDeveloperByID(chosenDeveloperID);
-
-
-            bool wasUpdated = _devTeamRepository.AddDevToTeam(teamIDSelected, dev);
-
-            //If the developer was added we need to tell the user
-            // If it wasnt we also need to tell them
-            if (wasUpdated)
+            bool keepEntering = true;
+            while (keepEntering)
             {
-                Console.WriteLine("The developer was successfully added to the team");
+                Console.WriteLine("\nPick a developer by ID you would like to add to the team:");
+                string chosenDeveloperID = Console.ReadLine();
+
+                // Get developer ID and assign to object
+                Developer dev = _developerRepository.GetDeveloperByID(chosenDeveloperID);
+
+                // Add dev to team and see if it worked
+                bool wasUpdated = _devTeamRepository.AddDevToTeam(teamIDSelected, dev);
+
+                //If the developer was added we need to tell the user
+                // If it wasnt we also need to tell them
+                if (wasUpdated)
+                {
+                    Console.WriteLine("\nThe developer was successfully added to the team");
+                }
+                else
+                {
+                    Console.WriteLine("\nThe developer was unable to be added to the team");
+                }
+
+                
+                Console.WriteLine("Would you like to add another developer to the team?...(y/n)");
+                string answer = Console.ReadLine().ToLower();
+
+                if (answer == "y")
+                {
+                    keepEntering = true;
+                }
+                else
+                {
+                    keepEntering = false;
+                }
+
             }
-            else
-            {
-                Console.WriteLine("The developer was unable to be added to the team");
-            }
+        }
+
+        // Add multiple Developers to a team at once
+        private void AddMultipleMembersToTeam()
+        {
+            // clear console
+            Console.Clear();
+
+            //Get ID for team the user would like to add developers to
+            DisplayAllTeams();
+            Console.WriteLine("\nEnter the ID for the team you would like to add developers to:");
+            string teamIDSelected = Console.ReadLine();
+
+            // Get ID for developers the user would like to add
+            Console.Clear();
+            DisplayAllDevelopers();
 
         }
+
 
         // Remove individual developer from a team
         private void RemoveMembersFromTeam()
@@ -513,7 +571,7 @@ namespace Program_UI
 
         private bool HasPluralsightAccess()
         {
-            Console.WriteLine("Does this developer have Pluralsight access? (type y/n)");
+            Console.WriteLine("\nDoes this developer have Pluralsight access? (type y/n)");
             string answer = Console.ReadLine().ToLower();
             if (answer == "y")
             {
